@@ -1,0 +1,113 @@
+<html>
+<style>
+.number-content{
+	font-size:44px;
+	text-align:right;
+}
+.question{
+
+	border: 2px solid blue;
+    margin: 5px- 1px;
+}
+
+.answer{
+	border-top: 2px solid gray;
+}
+.ansText{
+	text-align: right;
+	float:right;
+	direction: rtl;
+
+}
+</style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="faker.min.js"></script>
+<body>
+
+<div id="container">
+</div>
+</body>
+<script>
+var data=[];
+const cols=4;
+let cnt = 20;
+let limit = 100;
+function fillContainer(){
+	data=[];
+	createLargeGrid(cnt);
+	generateData(cnt);
+	fillGrid(cnt);
+}
+
+function fillGrid(cnt){
+	for(i=0;i<cnt;i++){
+		document.getElementById("l" + i).innerHTML=data[i].l
+		document.getElementById("o" + i).innerHTML=data[i].opr
+		document.getElementById("r" + i).innerHTML=data[i].r
+	}
+}
+function generateData(cnt){
+	for(i=0;i<cnt;i++){
+		let eqn = {"l":faker.random.number(limit), "r":faker.random.number(limit),
+				"opr": faker.random.boolean()? "+" : "-"}
+		if(eqn.opr == "-" && eqn.r>eqn.l){//we dont want -ve answer for minus
+			eqn.opr = eqn.l;
+			eqn.l = eqn.r;eqn.r = eqn.opr;
+			eqn.opr="-"
+		}else if(eqn.opr == "+" && ((eqn.r + eqn.l)>limit)){//this done to ensure summation doesnt exceeed limit
+			eqn.r= limit - eqn.l  ;
+		}
+		eqn["ans"]=eval(eqn.l + eqn.opr + eqn.r);
+		data.push(eqn);
+	}
+}
+function createLargeGrid(dataCount){
+	const container = document.getElementById("container");
+	container.innerHTML="";
+	let rows=dataCount/2;
+
+	let content='';
+	for(i=0; i<dataCount;i++){
+		if(i%cols==0){
+			if(i>0){
+				content+= '</div>'
+			}
+			content+= '<div class="row">';
+		}
+		content+=
+		'<div class="col-md-3 question">' +
+			'<div class="row question-section">'+
+				'<div class="col-md-12 number-content" id="l' + i +'" >2</div>'+
+				'<div class="col-md-1 number-content" id="o' + i +'" >+</div>'+
+				'<div class="col-md-11 number-content" id="r' + i +'" >2</div>'+
+				'<div class="col-md-12 number-content answer"><input size=2 type="text" id="a' + i +'" class="answerText" onChange="checkAnswer(this)" value=""></div>'+
+			'</div>'+
+		'</div><!--end of the question-->';
+    }
+    content +="</div><!--end of the row-->";
+	container.innerHTML=content;
+}
+
+fillContainer();
+
+function checkAnswer(ans){
+	if(ans.value=="") return;
+	let qNo = ans.id.substring(1);
+	let valid = (
+		eval(
+				document.getElementById("l" + qNo).innerText +
+				document.getElementById("o" + qNo).innerText +
+				document.getElementById("r" + qNo).innerText
+			)  == document.getElementById("a" + qNo).value
+	);
+	console.log(qNo +":" +valid );
+	ans.style.borderColor = valid? "green":"red";
+	ans.style.color= valid? "green":"red";
+	//document.getElementById("l" + qNo)
+}
+
+</script>
+
+</html>
