@@ -4,6 +4,7 @@
 	font-size:44px;
 	text-align:right;
 }
+
 .question{
 
 	border: 2px solid blue;
@@ -23,9 +24,23 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="faker.min.js"></script>
+<script src="./scripts/faker.min.js"></script>
 <body>
 
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-secondary active">
+    <input type="radio" name="options" id="option1" autocomplete="off"  onChange=changeLevel(1)>Easy
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option2" autocomplete="off" onChange=changeLevel(2)>Medium
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option3" autocomplete="off" checked onChange=changeLevel(3)>Difficult
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option3" autocomplete="off" onChange=changeLevel(4)>Advance
+  </label>
+</div>
 <div id="container">
 </div>
 </body>
@@ -34,6 +49,19 @@ var data=[];
 const cols=4;
 let cnt = 30;
 let limit = 100;
+function changeLevel(levelNo){
+	switch(levelNo){
+		case 1:
+			limit=10; break;
+		case 2:
+			limit=50; break;
+		case 3:
+			limit=100;break;
+		case 4:
+			limit=500;break;
+	}
+	fillContainer();
+}
 function fillContainer(){
 	data=[];
 	createLargeGrid(cnt);
@@ -80,8 +108,8 @@ function createLargeGrid(dataCount){
 		'<div class="col-md-3 question">' +
 			'<div class="row question-section">'+
 				'<div class="col-md-12 number-content" id="l' + i +'" >2</div>'+
-				'<div class="col-md-1 number-content" id="o' + i +'" >+</div>'+
-				'<div class="col-md-11 number-content" id="r' + i +'" >2</div>'+
+				'<div class="col-md-9 number-content opr" id="o' + i +'" >+</div>'+
+				'<div class="col-md-3 number-content" id="r' + i +'" >2</div>'+
 				'<div class="col-md-12 number-content answer"><input size=2 type="text" id="a' + i +'" class="answerText" onChange="checkAnswer(this)" value=""></div>'+
 			'</div>'+
 		'</div><!--end of the question-->';

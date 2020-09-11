@@ -27,19 +27,49 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="faker.min.js"></script>
+<script src="./scripts/faker.min.js"></script>
 <body>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-secondary active">
+    <input type="radio" name="options" id="option1" autocomplete="off"  onChange=changeLevel(1)>Easy
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option2" autocomplete="off" onChange=changeLevel(2)>Medium
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option3" autocomplete="off" checked onChange=changeLevel(3)>Difficult
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option3" autocomplete="off" onChange=changeLevel(4)>Advance
+  </label>
+</div>
 <div id="container">
 </div>
 </body>
 <script>
 var data=[];
-generate();
-function generate(){
+generate(100);
+
+function changeLevel(levelNo){
+	let limit =0;
+	switch(levelNo){
+		case 1:
+			limit=10; break;
+		case 2:
+			limit=50; break;
+		case 3:
+			limit=100;break;
+		case 4:
+			limit=500;break;
+	}
+	generate(limit);
+}
+
+function generate(limit){
 
 	data=[];
 	let cnt = 20;
-	var limit = 100;
+	//var limit = 100;
 	//let d = document.getElementById("main");
 	let col =0;
 	createGrid(cnt);
@@ -84,7 +114,7 @@ function generate(){
 }
 function createGrid(dataCount){
   const container = document.getElementById("container");
-
+container.innerHTML="";
   let rows=dataCount/2;
   let cols=2;
   container.style.setProperty('--grid-rows', rows);
