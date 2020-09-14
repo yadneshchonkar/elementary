@@ -1,4 +1,17 @@
 <html>
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177918754-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-177918754-1');
+</script>
+	
+</head>	
+	
 <style>
 :root {
   --grid-cols: 1;
@@ -31,16 +44,16 @@
 <body>
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
   <label class="btn btn-secondary active">
-    <input type="radio" name="options" id="option1" autocomplete="off"  onChange=changeLevel(1)>Easy
+    <input type="radio" name="options" id="option1" autocomplete="off"  onChange=changeLevel(1)>Level 1
   </label>
   <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option2" autocomplete="off" onChange=changeLevel(2)>Medium
+    <input type="radio" name="options" id="option2" autocomplete="off" onChange=changeLevel(2)>Level 2
   </label>
   <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option3" autocomplete="off" checked onChange=changeLevel(3)>Difficult
+    <input type="radio" name="options" id="option3" autocomplete="off" checked onChange=changeLevel(3)>Level 3
   </label>
   <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option3" autocomplete="off" onChange=changeLevel(4)>Advance
+    <input type="radio" name="options" id="option3" autocomplete="off" onChange=changeLevel(4)>Level 4
   </label>
 </div>
 <div id="container">
