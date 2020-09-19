@@ -12,8 +12,9 @@
 	
 </head>	
 <style>
+
 .cell{
-  border: 4px solid blue;
+  border: 4px solid lightsalmon;
 }
 .cellBG{
   background-color: blueviolet;
@@ -24,15 +25,21 @@
   vertical-align: text-bottom;
 }
 .tableCell{
-	font-size:40px;
+	font-size:30px;
 	text-align:left;  
 }
 .classImage{
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 50px;
+  max-height: 50px;
   width: 100px; 
   height: auto;
   visibility: hidden;
+}
+.correct{
+  border: 4px solid green;
+}
+.wrong{
+  border: 4px solid red;
 }
 </style>
 
@@ -41,11 +48,25 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="./scripts/faker.min.js"></script>
 <body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Elementarty</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="GridMath.html">Addition/Substraction</a></li>
+        <li class="active" href="multiplication1.html"><a  href="multiplication1.html">Multiplication</a></li>
+        <li><a href="division1.html">Division</a></li>
+        <li><a href="guessTheCoin.html">Counting Coins</a></li>
+      </ul>
+    </div>
+  </nav>  
 <div id="container">
-  <h1> How Many <img src="./images/strawberry.jpg" class="classImage" style="visibility: visible;">
+  <p class="h2"> How Many <img src="./images/strawberry.jpg" class="classImage" style="visibility: visible;">
        would you need to fill in each box? <input size="2" type="text" id="answer" onchange="checkAnswer(this.value)">
-  </h1>
-  <h1 id="ans"></h1>
+       <button id="tryMore" onclick="generateGrid()">Try More</button>
+  </p>
+  <div class="col-md-8"><h2 id="ans"></h2></div>
   <div id="gridSection" class="col-md-9"></div>
   <div id="tablSection" class="col-md-3"></div>
 </div>
@@ -65,16 +86,22 @@
     let ansH1 = document.getElementById("ans")
     if(ans==(rows*cols)){
       ansH1.innerHTML ="Correct <span style='font-size:100px;'>&#9995;</span>";
+      ansH1.className="correct";
     }else if(ans>(rows*cols)){
-      ansH1.innerHTML ="You have " + (ans - (rows*cols)) + " more than the boxes";
+      ansH1.innerHTML ="You have filled all the boxes and have " + (ans - (rows*cols)) + " more strawberries";
+      ansH1.className="wrong";
     }else{
-      ansH1.innerHTML ="You still have " + ((rows*cols) -ans) + " boxes empty";
+      ansH1.innerHTML ="You need " + ((rows*cols) -ans) + " more strawberries to fill all the boxes";
+      ansH1.className ="wrong";
+      
     }
   }
   let limit = 10;
   let rows = 0;
   let cols =0;
   function fillTableSection(){
+    document.getElementById("ans").innerHTML="";
+    document.getElementById("ans").className="";
     let str = "<h1>Table Section</h1>";    
     for(i=1;i<=10;i++){
       let highlight1 = i== cols  ? 'cellBG':'';
@@ -108,6 +135,7 @@
       grid +='</div>';
     }
     document.getElementById("gridSection").innerHTML=grid;
+    document.getElementById("ans").value=""
     fillTableSection();
   }
   generateGrid();
