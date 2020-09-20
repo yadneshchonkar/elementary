@@ -14,7 +14,7 @@
 </head>
 
 <style>
-  .questionRow{
+  .questionRow {
     border: 2px solid blue;
     margin: 5px- 1px;
   }
@@ -80,45 +80,74 @@
   </div>
 </body>
 <script>
-  let coinIndex = 0;
-  let coinsShown = 0;
+
   var coins = [
-    { "img": "dime", value: 10, text: "10c Dime" },
-    { "img": "dollar", value: 100, text: "$1 Dollar" },
-    { "img": "half_dollar", value: 50, text: "50c Half Quarter" },
-    { "img": "nickel", value: 5, text: "5c Nickel" },
-    { "img": "cent", value: 1, text: "1c Cent" },
-    { "img": "quarter", value: 25, text: "25c Quarter" }
+    { "img": "cent", value: .01, text: "1c Cent" },
+    { "img": "nickel", value: 0.05, text: "5c Nickel" },
+    { "img": "dime", value: 0.10, text: "10c Dime" },
+    { "img": "quarter", value: 0.25, text: "25c Quarter" },
+    { "img": "half_dollar", value: 0.50, text: "50c Half Dollar" },
+    { "img": "dollar", value: 1, text: "$1 Dollar" }
   ]
 
   function generateGrid() {
-    for(ctr=1;ctr<=10;ctr++){
+    for (ctr = 1; ctr <= 10; ctr++) {
       generateQuestion(ctr)
     }
   }
   function generateQuestion(qno) {
-    coinIndex = faker.random.number({
-          'min': 0,
-          'max': 5
-        });    
-    coinsShown = faker.random.number({
-          'min': 1,
-          'max': 5
-        });
-    console.log("coin index :" + coinIndex)
-    console.log("coin coinsShown :" + coinsShown)
+    let coinIndex = faker.random.number({
+      'min': 0,
+      'max': 5
+    });
+    let coinsShown = faker.random.number({
+      'min': 1,
+      'max': 10
+    });
+    console.log(coinsShown +" coins of :" + JSON.stringify(coins[coinIndex]))
     
-    let str="";
+    let answer = (coins[coinIndex].value * coinsShown).toFixed(2);
+    let str = "";
     str += '<div class="row questionRow"><div class="col-md-6" id="coinsDiv">'
-    for(i=0;i<coinsShown;i++){
-        str +='<img class="coinImg" src = "images/' + coins[coinIndex].img + '_1.jpg">'      
+    for (i = 0; i < coinsShown; i++) {
+      str += '<img class="coinImg" src = "images/' + coins[coinIndex].img + '_1.jpg">'
     }
-    str +='</div>'
-    str+='<div class="col-md-6 coinOptions" id="coinsDiv">Count how many</div>'
-    document.getElementById("questionsGrid").innerHTML+=str;    
+    str += '</div>'
+    str += '<div class="col-md-3 coinOptions" id="coinsDiv">' +
+      '<input type=text  name="question" id="quest_' + qno + '" placeholder="Answer" value="">' +
+      '<input type=hidden  id="ans_' + qno + '" value="' + answer + '">' +
+
+      '<a data-toggle="collapse" href="#collapse' + qno +'">Help</a>'+
+      '<div id="collapse' + qno+ '" class="collapse">'+
+        coinsShown+ ' coins of ' + coins[coinIndex].text  + ' is ' + 
+        ((answer<1) ? (answer*100)+" cents" : "$" + answer )+
+      '</div>' +      
+
+      '</div>'
+    document.getElementById("questionsGrid").innerHTML += str;
   }
   generateGrid();
 
+  document.getElementsByName('question').
+    forEach(function (me) { me.addEventListener('change', checkAnswer) });
+
+
+  function checkAnswer(event) {
+    let element = event.target;
+    let qno = element.id.split("_")[1];
+    let ans = document.getElementById("ans_" + qno)
+    //let elementValue = element.value;
+    console.log("check answer compare " + element.value + ":" + ans.value)
+    
+    let valid = element.value/1 == ans.value/1
+    //compare in cents
+    if(!valid){
+      valid = element.value/100 == ans.value/1
+    }
+    
+    element.style.borderColor = valid ? "green" : "red";
+    element.style.color = valid ? "green" : "red";
+  }
 </script>
 
 </html>
