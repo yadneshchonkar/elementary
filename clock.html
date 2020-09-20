@@ -163,8 +163,8 @@ function drawNumbers(ctx, radius) {
 function drawTime(ctx, radius, qno){
     var now = new Date();
     var hour = faker.random.number({
-          'min': 0,
-          'max': 5
+          'min': 1,
+          'max': 12
         }); 
     var minute = faker.random.number({
           'min': 0,
@@ -172,6 +172,7 @@ function drawTime(ctx, radius, qno){
         }); ;
     //round to nearest 5 for better reading
     minute = Math.round(minute/5) * 5;
+    if(minute==60) minute=0;
     let ans = document.createElement("HIDDEN");
     ans.id = 'ans_' + qno;
     ans.value= hour + ":" + minute;
