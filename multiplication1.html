@@ -88,7 +88,8 @@
 
   <div id="container">
     <p class="h2"> How Many <img src="./images/strawberry.jpg" class="classImage" style="visibility: visible;">
-      would you need to fill in each box? <input size="2" type="text" id="answer" onchange="checkAnswer(this.value)">
+      would you need to fill in each box? <input size="2" type="text" id="answer" onchange="checkAnswer()">
+      <button id="check" onclick="checkAnswer()">Check Answer</button>
       <button id="tryMore" onclick="generateGrid()">Try More</button>
     </p>
     <div class="col-md-8">
@@ -99,7 +100,8 @@
   </div>
 </body>
 <script>
-  function checkAnswer(ans) {
+  function checkAnswer() {
+    let ans = document.getElementById("answer").value
     console.log("answer:" + ans)
     for (i = 1; ; i++) {
       let img = document.getElementById("img_" + i);
@@ -142,6 +144,7 @@
     document.getElementById("tablSection").innerHTML = str;
   }
   function generateGrid() {
+    document.getElementById("answer").value ="";
     let grid = "";
     rows = 0; cols = 0;
     while (rows < 2) rows = faker.random.number(limit);
