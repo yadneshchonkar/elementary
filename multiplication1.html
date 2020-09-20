@@ -131,7 +131,8 @@
   function fillTableSection() {
     document.getElementById("ans").innerHTML = "";
     document.getElementById("ans").className = "";
-    let str = "<h1>Table Section</h1>";
+    let str = '<h1><a data-toggle="collapse" href="#collapse1">Table Section</a></h1>';
+    str+='<div id="collapse1" class="collapse">'
     for (i = 1; i <= 10; i++) {
       let highlight1 = i == cols ? 'cellBG' : '';
       let highlight2 = i == rows ? 'cellBG' : '';
@@ -140,11 +141,14 @@
       str += "<div class='col-md-6 tableCell cell " + highlight2 + "'>" + cols + "X" + i + "=" + (cols * i) + "</div>";
       str += "</div>"
     }
-
+    //str += "</div>"
     document.getElementById("tablSection").innerHTML = str;
   }
+
+
+
   function generateGrid() {
-    document.getElementById("answer").value ="";
+    document.getElementById("answer").value = "";
     let grid = "";
     rows = 0; cols = 0;
     while (rows < 2) rows = faker.random.number(limit);
