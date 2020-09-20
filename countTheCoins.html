@@ -14,9 +14,9 @@
 </head>
 
 <style>
-  .div {
-    border: 3px;
-    border-color: black;
+  .questionRow{
+    border: 2px solid blue;
+    margin: 5px- 1px;
   }
 
   .coinOptions {
@@ -30,9 +30,9 @@
   }
 
   .coinImg {
-    max-width: 150px;
-    max-height: 200px;
-    width: 150px;
+    max-width: 100px;
+    max-height: 100px;
+    width: 100px;
     height: auto;
   }
 </style>
@@ -68,19 +68,15 @@
             <li><a href="countTheCoins.html">Count the Coins</a></li>
           </ul>
         </li>
+        <li><a href="clock.html">Clock</a></li>
       </ul>
     </div>
   </nav>
 
 
   <div id="container">
-    <h1>H</h1>
-    <div class="row">
-      <div class="col-md-12" id="coinsDiv">
-
-      </div>
-      
-    </div>
+    <h1>Count the coins and tell us how much money is this.</h1>
+    <div id="questionsGrid"></div>
   </div>
 </body>
 <script>
@@ -94,21 +90,34 @@
     { "img": "cent", value: 1, text: "1c Cent" },
     { "img": "quarter", value: 25, text: "25c Quarter" }
   ]
-  function generateQuestion() {
-    coinIndex = faker.random.number(5);
-    while(coinsShown<=0)
-      coinsShown = faker.random.number(10);
+
+  function generateGrid() {
+    for(ctr=1;ctr<=10;ctr++){
+      generateQuestion(ctr)
+    }
+  }
+  function generateQuestion(qno) {
+    coinIndex = faker.random.number({
+          'min': 0,
+          'max': 5
+        });    
+    coinsShown = faker.random.number({
+          'min': 1,
+          'max': 5
+        });
     console.log("coin index :" + coinIndex)
     console.log("coin coinsShown :" + coinsShown)
     
     let str="";
+    str += '<div class="row questionRow"><div class="col-md-6" id="coinsDiv">'
     for(i=0;i<coinsShown;i++){
-      str +='<img class="coinImg" src = "images/' + coins[coinIndex].img + '_1.jpg">';
+        str +='<img class="coinImg" src = "images/' + coins[coinIndex].img + '_1.jpg">'      
     }
-    document.getElementById("coinsDiv").innerHTML=str;
-    
+    str +='</div>'
+    str+='<div class="col-md-6 coinOptions" id="coinsDiv">Count how many</div>'
+    document.getElementById("questionsGrid").innerHTML+=str;    
   }
-  generateQuestion();
+  generateGrid();
 
 </script>
 

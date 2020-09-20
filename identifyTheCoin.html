@@ -68,6 +68,7 @@
             <li><a href="countTheCoins.html">Count the Coins</a></li>
           </ul>
         </li>
+        <li><a href="clock.html">Clock</a></li>
       </ul>
     </div>
   </nav>
@@ -83,31 +84,8 @@
 
       </div>
       <div class="col-md-6">
-        <div class="cold-md-12">
-          <div class="radio">
-            <label class="coinOptions"><input type="radio" id="optradio" name="optradio" onChange="checkAnswer(0)"
-                checked>1c Penny</label>
-          </div>
-          <div class="radio">
-            <label class="coinOptions"><input type="radio" onChange="checkAnswer(1)" id="optradio" name="optradio">5c
-              Nickel</label>
-          </div>
-          <div class="radio">
-            <label class="coinOptions"><input type="radio" onChange="checkAnswer(2)" id="optradio" name="optradio">10c
-              Dime</label>
-          </div>
-          <div class="radio">
-            <label class="coinOptions"><input type="radio" onChange="checkAnswer(3)" id="optradio" name="optradio">25c
-              Dime</label>
-          </div>
-          <div class="radio">
-            <label class="coinOptions"><input type="radio" onChange="checkAnswer(4)" id="optradio" name="optradio">50c
-              Half Dollar</label>
-          </div>
-          <div class="radio">
-            <label class="coinOptions"><input onChange="checkAnswer(5)" type="radio" id="optradio" name="optradio">$1
-              Dollar</label>
-          </div>
+        <div class="cold-md-12" id="optionsDiv">
+
         </div>
         <div id="prompt" class=" col-md-6 ansDiv"></div>
       </div>
@@ -117,12 +95,12 @@
 <script>
   let coinIndex = 0;
   var coins = [
-    { "img": "dime", value: 10, text: "10c Dime" },
-    { "img": "dollar", value: 100, text: "$1 Dollar" },
-    { "img": "half_dollar", value: 50, text: "50c Half Dollar" },
-    { "img": "nickel", value: 5, text: "5c Nickel" },
     { "img": "cent", value: 1, text: "1c Cent" },
-    { "img": "quarter", value: 25, text: "25c Quarter" }
+    { "img": "nickel", value: 5, text: "5c Nickel" },
+    { "img": "dime", value: 10, text: "10c Dime" },
+    { "img": "quarter", value: 25, text: "25c Quarter" },
+    { "img": "half_dollar", value: 50, text: "50c Half Dollar" },
+    { "img": "dollar", value: 100, text: "$1 Dollar" }
   ]
   function generateQuestion() {
     document.getElementById("prompt").innerHTML = "";
@@ -131,7 +109,21 @@
     document.getElementById("coinId_1").src = "images/" + coins[coinIndex].img + "_1.jpg";
     document.getElementById("coinId_2").src = "images/" + coins[coinIndex].img + "_2.jpg";
   }
+  function generateOptions(){
+    let optionsDiv = document.getElementById("optionsDiv")
+    let str= "";
+    for(let ctr=0;ctr<coins.length;ctr++){
+      str += '<div class="radio">' + 
+              '<label class="coinOptions">'+
+              '<input type="radio" id="optradio" name="optradio" onChange="checkAnswer('+ ctr+')">'+ coins[ctr].text + '</label>'+
+              '</div>'
+    }
+    optionsDiv.innerHTML=str;
+
+  }
   generateQuestion();
+  generateOptions();
+
   function checkAnswer(index) {
     let prompt = document.getElementById("prompt");
     console.log(index + ":" +coinIndex)
@@ -141,7 +133,7 @@
       document.getElementById("optradio").selectedIndex = coinIndex
       prompt.innerHTML = "Oops!! This coin is " + coins[coinIndex].text;
     }
-    prompt.innerHTML += "<br><a href='javascript:generateQuestion()'>Try More</a>"
+    prompt.innerHTML += "<br><a href='javascript:generateQuestion();generateOptions()'>Try More</a>"
   }
 </script>
 
