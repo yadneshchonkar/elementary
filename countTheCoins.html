@@ -12,43 +12,30 @@
   </script>
 
 </head>
+
 <style>
-  .cell {
-    border: 4px solid lightsalmon;
+  .div {
+    border: 3px;
+    border-color: black;
   }
 
-  .cellBG {
-    background-color: blueviolet;
+  .coinOptions {
+    font-size: 24px;
+    text-align: right;
   }
 
-  .cellHeader {
-    font-size: 44px;
-    text-align: center;
-    vertical-align: text-bottom;
-  }
-
-  .tableCell {
-    font-size: 30px;
+  .ansDiv {
+    font-size: 24px;
     text-align: left;
   }
 
-  .classImage {
-    max-width: 50px;
-    max-height: 50px;
-    width: 100px;
+  .coinImg {
+    max-width: 150px;
+    max-height: 200px;
+    width: 150px;
     height: auto;
-    visibility: hidden;
-  }
-
-  .correct {
-    border: 4px solid green;
-  }
-
-  .wrong {
-    border: 4px solid red;
   }
 </style>
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -87,10 +74,41 @@
 
 
   <div id="container">
-    <h1>Comming Soon!</h1>
+    <h1>H</h1>
+    <div class="row">
+      <div class="col-md-12" id="coinsDiv">
+
+      </div>
+      
+    </div>
   </div>
 </body>
 <script>
+  let coinIndex = 0;
+  let coinsShown = 0;
+  var coins = [
+    { "img": "dime", value: 10, text: "10c Dime" },
+    { "img": "dollar", value: 100, text: "$1 Dollar" },
+    { "img": "half_dollar", value: 50, text: "50c Half Quarter" },
+    { "img": "nickel", value: 5, text: "5c Nickel" },
+    { "img": "cent", value: 1, text: "1c Cent" },
+    { "img": "quarter", value: 25, text: "25c Quarter" }
+  ]
+  function generateQuestion() {
+    coinIndex = faker.random.number(5);
+    while(coinsShown<=0)
+      coinsShown = faker.random.number(10);
+    console.log("coin index :" + coinIndex)
+    console.log("coin coinsShown :" + coinsShown)
+    
+    let str="";
+    for(i=0;i<coinsShown;i++){
+      str +='<img class="coinImg" src = "images/' + coins[coinIndex].img + '_1.jpg">';
+    }
+    document.getElementById("coinsDiv").innerHTML=str;
+    
+  }
+  generateQuestion();
 
 </script>
 

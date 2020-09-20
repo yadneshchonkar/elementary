@@ -1,189 +1,225 @@
 <html>
+
 <head>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177918754-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177918754-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'UA-177918754-1');
-</script>
-	
-</head>	
-	
+    gtag('config', 'UA-177918754-1');
+  </script>
+
+</head>
+
 <style>
-:root {
-  --grid-cols: 1;
-  --grid-rows: 1;
-}
+  :root {
+    --grid-cols: 1;
+    --grid-rows: 1;
+  }
 
-#container {
-  display: grid;
-  grid-gap: 1em;
-  grid-template-rows: repeat(var(--grid-rows), 1fr);
-  grid-template-columns: repeat(var(--grid-cols), 1fr);
-}
+  #container {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-rows: repeat(var(--grid-rows), 1fr);
+    grid-template-columns: repeat(var(--grid-cols), 1fr);
+  }
 
-.grid-item {
-  padding: 1em;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-.error {
-  border:2px solid red;
-}
-.correct {
-  border:2px solid green;
-}
+  .grid-item {
+    padding: 1em;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+
+  .error {
+    border: 2px solid red;
+  }
+
+  .correct {
+    border: 2px solid green;
+  }
 </style>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="./scripts/faker.min.js"></script>
+
 <body>
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
-  <label class="btn btn-secondary active">
-    <input type="radio" name="options" id="option1" autocomplete="off"  onChange=changeLevel(1)>Level 1
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option2" autocomplete="off" onChange=changeLevel(2)>Level 2
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option3" autocomplete="off" checked onChange=changeLevel(3)>Level 3
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="options" id="option3" autocomplete="off" onChange=changeLevel(4)>Level 4
-  </label>
-</div>
-<div id="container">
-</div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Elementarty</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Addition/Substraction
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="GridMath.html">Grid</a></li>
+            <li><a href="math.html">Non Grid</a></li>
+          </ul>
+        </li>
+
+        <li><a href="multiplication1.html">Multiplication</a></li>
+        <li><a href="division1.html">Division</a></li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Currency & Coins
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="identifyTheCoin.html">Identify The Coin</a></li>
+            <li><a href="countTheCoins.html">Count the Coins</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+      <input type="radio" name="options" id="option1" autocomplete="off" onChange=changeLevel(1)>Level 1
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" name="options" id="option2" autocomplete="off" onChange=changeLevel(2)>Level 2
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" name="options" id="option3" autocomplete="off" checked onChange=changeLevel(3)>Level 3
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" name="options" id="option3" autocomplete="off" onChange=changeLevel(4)>Level 4
+    </label>
+  </div>
+  <div id="container">
+  </div>
 </body>
 <script>
-var data=[];
-generate(100);
+  var data = [];
+  generate(100);
 
-function changeLevel(levelNo){
-	let limit =0;
-	switch(levelNo){
-		case 1:
-			limit=10; break;
-		case 2:
-			limit=50; break;
-		case 3:
-			limit=100;break;
-		case 4:
-			limit=500;break;
-	}
-	generate(limit);
-}
+  function changeLevel(levelNo) {
+    let limit = 0;
+    switch (levelNo) {
+      case 1:
+        limit = 10; break;
+      case 2:
+        limit = 50; break;
+      case 3:
+        limit = 100; break;
+      case 4:
+        limit = 500; break;
+    }
+    generate(limit);
+  }
 
-function generate(limit){
+  function generate(limit) {
 
-	data=[];
-	let cnt = 20;
-	//var limit = 100;
-	//let d = document.getElementById("main");
-	let col =0;
-	createGrid(cnt);
-	for(i=0;i<cnt;i++){
-		let eqn = {"l":faker.random.number(limit), "r":faker.random.number(limit),
-				"opr": faker.random.boolean()? "+" : "-"}
-		if(eqn.opr == "-" && eqn.r>eqn.l){//we dont want -ve answer for minus
-			eqn.opr = eqn.l;
-			eqn.l = eqn.r;eqn.r = eqn.opr;
-			eqn.opr="-"
-		}else if(eqn.opr == "+" && ((eqn.r + eqn.l)>limit)){//this done to ensure summation doesnt exceeed limit
-			eqn.r= limit - eqn.l  ;
-		}
-		eqn["ans"]=eval(eqn.l + eqn.opr + eqn.r);
-		//randomly remove 1 element
-		switch(faker.random.number(3)){
-			case 1:eqn["l"]="";break;
-			case 2:eqn["r"]="";break;
-			default:eqn["ans"]="";break;
+    data = [];
+    let cnt = 20;
+    //var limit = 100;
+    //let d = document.getElementById("main");
+    let col = 0;
+    createGrid(cnt);
+    for (i = 0; i < cnt; i++) {
+      let eqn = {
+        "l": faker.random.number(limit), "r": faker.random.number(limit),
+        "opr": faker.random.boolean() ? "+" : "-"
+      }
+      if (eqn.opr == "-" && eqn.r > eqn.l) {//we dont want -ve answer for minus
+        eqn.opr = eqn.l;
+        eqn.l = eqn.r; eqn.r = eqn.opr;
+        eqn.opr = "-"
+      } else if (eqn.opr == "+" && ((eqn.r + eqn.l) > limit)) {//this done to ensure summation doesnt exceeed limit
+        eqn.r = limit - eqn.l;
+      }
+      eqn["ans"] = eval(eqn.l + eqn.opr + eqn.r);
+      //randomly remove 1 element
+      switch (faker.random.number(3)) {
+        case 1: eqn["l"] = ""; break;
+        case 2: eqn["r"] = ""; break;
+        default: eqn["ans"] = ""; break;
 
-		}
-		data.push(eqn);
+      }
+      data.push(eqn);
 
-		//let l = document.createElement("input");l.setAttribute("name", "l" + i);l.setAttribute("value", "left:" + eqn.l);
+      //let l = document.createElement("input");l.setAttribute("name", "l" + i);l.setAttribute("value", "left:" + eqn.l);
 
-		//let r = document.createElement("input"); r.setAttribute("name", "r" + i);r.setAttribute("value", "right" + eqn.r)
-		//let opr = document.createElement("input");l.setAttribute("name", "opr" + i);l.setAttribute("value", "opr:" + eqn.opr);
-		//let ans = document.createElement("input");ans.setAttribute("name", "ans" + i);ans.setAttribute("value", "ans:" +eqn.ans)
-		let eql = document.createElement("label");eql.innerHTML ="&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;";
-		let d = document.getElementById("div"+i);
-		createAndAppendInputElement(d,"l" + i, eqn.l, "left");
-		createAndAppendInputElement(d,"o" + i, eqn.opr,"center");
-		createAndAppendInputElement(d,"r" + i, eqn.r,"left");
-		d.appendChild(eql);
-		createAndAppendInputElement(d,"a" + i, eqn.ans,"left");
-		//d.appendChild(document.createElement("br"));
-		//d.appendChild(document.createElement("hr"));
-		//d.appendChild(document.createElement("br"));
-	}
-	console.log(data);
+      //let r = document.createElement("input"); r.setAttribute("name", "r" + i);r.setAttribute("value", "right" + eqn.r)
+      //let opr = document.createElement("input");l.setAttribute("name", "opr" + i);l.setAttribute("value", "opr:" + eqn.opr);
+      //let ans = document.createElement("input");ans.setAttribute("name", "ans" + i);ans.setAttribute("value", "ans:" +eqn.ans)
+      let eql = document.createElement("label"); eql.innerHTML = "&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;";
+      let d = document.getElementById("div" + i);
+      createAndAppendInputElement(d, "l" + i, eqn.l, "left");
+      createAndAppendInputElement(d, "o" + i, eqn.opr, "center");
+      createAndAppendInputElement(d, "r" + i, eqn.r, "left");
+      d.appendChild(eql);
+      createAndAppendInputElement(d, "a" + i, eqn.ans, "left");
+      //d.appendChild(document.createElement("br"));
+      //d.appendChild(document.createElement("hr"));
+      //d.appendChild(document.createElement("br"));
+    }
+    console.log(data);
 
-}
-function createGrid(dataCount){
-  const container = document.getElementById("container");
-container.innerHTML="";
-  let rows=dataCount/2;
-  let cols=2;
-  container.style.setProperty('--grid-rows', rows);
-  container.style.setProperty('--grid-cols', cols);
+  }
+  function createGrid(dataCount) {
+    const container = document.getElementById("container");
+    container.innerHTML = "";
+    let rows = dataCount / 2;
+    let cols = 2;
+    container.style.setProperty('--grid-rows', rows);
+    container.style.setProperty('--grid-cols', cols);
 
-  for (c = 0; c < (rows * cols); c++) {
-    let cell = document.createElement("div");
-    cell.id="div" + c;
-    //cell.innerText = (c + 1);
-    container.appendChild(cell).className = "grid-item";
-  };
-}
-
-
-// Creates columns
-function makeColumns(cellNum) {
-    for (i = 0; i < rows.length; i++) {
-        for (j = 0; j < cellNum; j++) {
-            let newCell = document.createElement("div");
-            rows[j].appendChild(newCell).className = "cell";
-        };
+    for (c = 0; c < (rows * cols); c++) {
+      let cell = document.createElement("div");
+      cell.id = "div" + c;
+      //cell.innerText = (c + 1);
+      container.appendChild(cell).className = "grid-item";
     };
-};
-function createAndAppendInputElement(container,name, value, align){
-	let r = document.createElement("input");
-	r.setAttribute("name", name);
-	r.setAttribute("id", name);
-	r.setAttribute("value",  value);
-	r.setAttribute("style"," font-size:24px;text-align:" + align+ (value!=""?";border-style:none;":"")+";");
-	r.setAttribute("size", 1);
-	container.appendChild(r);
-	if(value!="") {
-		r.readOnly=true;
-		r.setAttribute("onfocus","this.blur();");
-		r.setAttribute("tabindex","-1");
-	}else{
-		r.setAttribute("onChange",  "checkAnswer(this)");
-		//r.addEventListener('change',checkAnswer(r));
-	}
-	return r;
-}
-function checkAnswer(ans){
-	if(ans.value=="") return;
-	let qNo = ans.name.substring(1);
-	let valid = (
-		eval(
-			document.getElementById("l" + qNo).value +
-			document.getElementById("o" + qNo).value +
-			document.getElementById("r" + qNo).value
-			)  == document.getElementById("a" + qNo).value
-	);
-	console.log(qNo +":" +valid );
-	ans.style.borderColor = valid? "green":"red";
-	ans.style.color= valid? "green":"red";
-	//document.getElementById("l" + qNo)
-}
+  }
+
+
+  // Creates columns
+  function makeColumns(cellNum) {
+    for (i = 0; i < rows.length; i++) {
+      for (j = 0; j < cellNum; j++) {
+        let newCell = document.createElement("div");
+        rows[j].appendChild(newCell).className = "cell";
+      };
+    };
+  };
+  function createAndAppendInputElement(container, name, value, align) {
+    let r = document.createElement("input");
+    r.setAttribute("name", name);
+    r.setAttribute("id", name);
+    r.setAttribute("value", value);
+    r.setAttribute("style", " font-size:24px;text-align:" + align + (value != "" ? ";border-style:none;" : "") + ";");
+    r.setAttribute("size", 1);
+    container.appendChild(r);
+    if (value != "") {
+      r.readOnly = true;
+      r.setAttribute("onfocus", "this.blur();");
+      r.setAttribute("tabindex", "-1");
+    } else {
+      r.setAttribute("onChange", "checkAnswer(this)");
+      //r.addEventListener('change',checkAnswer(r));
+    }
+    return r;
+  }
+  function checkAnswer(ans) {
+    if (ans.value == "") return;
+    let qNo = ans.name.substring(1);
+    let valid = (
+      eval(
+        document.getElementById("l" + qNo).value +
+        document.getElementById("o" + qNo).value +
+        document.getElementById("r" + qNo).value
+      ) == document.getElementById("a" + qNo).value
+    );
+    console.log(qNo + ":" + valid);
+    ans.style.borderColor = valid ? "green" : "red";
+    ans.style.color = valid ? "green" : "red";
+    //document.getElementById("l" + qNo)
+  }
 </script>
 
 </html>
