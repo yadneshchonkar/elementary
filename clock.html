@@ -73,7 +73,7 @@ function checkAnswer(event){
   let qno = element.id.split("_")[1];
   let ans = document.getElementById("ans_" + qno)
   let elementValue = Math.round(element.value.split(":")[0]) +":" +Math.round(element.value.split(":")[1])
-  console.log("check answer compare " +elementValue + ":" + ans.value)
+  console.log("check answer compare " +elementValue + " to " + ans.value)
   let valid = elementValue==ans.value 
   element.style.borderColor = valid ? "green" : "red";
   element.style.color = valid ? "green" : "red";    
@@ -88,13 +88,23 @@ function generateGrid(){
     lClockDiv = document.createElement("div");
     lClockDiv.className="col-md-3";
     ldivQuestion.append(lClockDiv);
-
-    createCanvas(lClockDiv, ctr)
-    createInputElements(lClockDiv,ctr)
+    let hour = faker.random.number({
+          'min': 1,
+          'max': 12
+        }); 
+    let minute = faker.random.number({
+          'min': 0,
+          'max': 59
+        }); ;
+    //round to nearest 5 for better reading
+    minute = Math.round(minute/5) * 5;
+    if(minute==60) minute=0;    
+    createCanvas(lClockDiv, ctr, hour, minute)
+    createInputElements(lClockDiv,ctr, hour, minute)
    }
 }
 
-function createCanvas(container, qno){
+function createCanvas(container, qno, hour, minute){
   let canvas = document.createElement("CANVAS");
   canvas.id="canvas_" + ctr;
   container.appendChild(canvas);
@@ -102,25 +112,38 @@ function createCanvas(container, qno){
   let radius = canvas.height / 2;
   ctx.translate(radius, radius);
   radius = radius * 0.90
-  drawClock(ctx, radius, ctr);
+  drawClock(ctx, radius, ctr, hour, minute);
 }
 
-function createInputElements(parent, qno){
-  let label = document.createElement("LABEL")
+function createInputElements(parent, qno, hour, minute){
   let text1 = document.createElement("INPUT")
   text1.name="quest"
   text1.id="quest_" + qno
-  //label.className="timeLabel";
   text1.size=5;
   text1.placeholder="00:00"
-  //parent.appendChild(label)
-  parent.appendChild(text1)
-  label.innerHTML = "Time:"
+  //parent.appendChild(text1)
+  let ans = document.createElement("HIDDEN");
+    ans.id = 'ans_' + qno;
+    ans.value= hour + ":" + minute;
+
+  let str=
+        '<div>'+
+        '<input type=text name="quest" size=5 placeholder="00:00" id="quest_'+ qno + '">'+
+        '<input type=text name="answer" size=5 value="' +  hour +':' + minute+ '" id="ans_'+ qno + '">'+
+        '<a data-toggle="collapse" href="#collapse' + qno +'">Help</a>'+
+      '<div id="collapse' + qno+ '" class="collapse">'+
+      'The time is ' + hour + ":"  + ((minute<10)? "0" + minute : minute)+
+  '</div></div>' ;
+  let elem = document.createElement("template");
+  elem.innerHTML = str.trim();
+  console.log(elem.content)
+  parent.appendChild(elem.content.firstChild)
+
 }
-function drawClock(ctx, radius,qno) {
+function drawClock(ctx, radius,qno, hour,minute) {
   drawFace(ctx, radius);
   drawNumbers(ctx, radius);
-  drawTime(ctx, radius, qno);
+  drawTime(ctx, radius, qno, hour, minute);
 }
 
 function drawFace(ctx, radius) {
@@ -160,23 +183,12 @@ function drawNumbers(ctx, radius) {
   }
 }
 
-function drawTime(ctx, radius, qno){
-    var now = new Date();
-    var hour = faker.random.number({
-          'min': 1,
-          'max': 12
-        }); 
-    var minute = faker.random.number({
-          'min': 0,
-          'max': 59
-        }); ;
-    //round to nearest 5 for better reading
-    minute = Math.round(minute/5) * 5;
-    if(minute==60) minute=0;
-    let ans = document.createElement("HIDDEN");
+function drawTime(ctx, radius, qno, hour, minute){
+    let now = new Date();
+    /*let ans = document.createElement("HIDDEN");
     ans.id = 'ans_' + qno;
     ans.value= hour + ":" + minute;
-    document.forms[0].appendChild(ans)
+    document.forms[0].appendChild(ans)*/
     var second = now.getSeconds();
     //hour
     hour=hour%12;
