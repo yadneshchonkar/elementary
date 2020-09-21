@@ -127,11 +127,13 @@ function createInputElements(parent, qno, hour, minute){
     ans.value= hour + ":" + minute;
 
   let str=
-        '<div>'+
+        '<div class="row">'+
+        '<div class="col-md-6">'+
         '<input type=text name="quest" size=5 placeholder="00:00" id="quest_'+ qno + '">'+
-        '<input type=text name="answer" size=5 value="' +  hour +':' + minute+ '" id="ans_'+ qno + '">'+
-        '<a data-toggle="collapse" href="#collapse' + qno +'">Help</a>'+
-      '<div id="collapse' + qno+ '" class="collapse">'+
+        '<input type=hidden name="answer" size=5 value="' +  hour +':' + minute+ '" id="ans_'+ qno + '">'+
+        '&nbsp;<a data-toggle="collapse" href="#collapse' + qno +'">Help</a>'+
+        '</div>'+
+      '<div id="collapse' + qno+ '" class="col-md-6 collapse">'+
       'The time is ' + hour + ":"  + ((minute<10)? "0" + minute : minute)+
   '</div></div>' ;
   let elem = document.createElement("template");
