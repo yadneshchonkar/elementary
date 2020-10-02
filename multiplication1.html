@@ -151,8 +151,8 @@
     document.getElementById("answer").value = "";
     let grid = "";
     rows = 0; cols = 0;
-    while (rows < 2) rows = faker.random.number(limit);
-    while (cols < 2) cols = faker.random.number(limit);
+    rows = faker.random.arrayElement([3,4,6,7,8,9,11,12]);
+    cols = faker.random.arrayElement([3,4,6,7,8,9,11,12]);
     let colSize = Math.floor(10 / (cols + 1));
     if (colSize == 0) colSize = 1;
     console.log(rows + ":" + cols + ":" + colSize)
