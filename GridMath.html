@@ -103,6 +103,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   let cnt = 30;
   let limit = 100;
   function changeLevel(levelNo) {
+    dataLayer.push(
+      {
+        'eventValue': levelNo,
+        'event': 'levelChange',
+        'eventCategory': 'Multiplication'
+      }
+   );   
     switch (levelNo) {
       case 1:
         limit = 10; break;
