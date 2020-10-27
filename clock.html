@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177918754-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+  
+      gtag('config', 'UA-177918754-1');
+    </script>
+  
+  </head>
+  <style>
+  .timeLabel {
+    font-size: 14px;
+    text-align: left;
+  }
+.col-md-3{
+  
+  border: 2px solid blue;
+    margin: 5px- 1px;
+}
+  </style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="./scripts/faker.min.js"></script>
+  
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Elementarty</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Addition/Substraction
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="GridMath.html">Grid</a></li>
+            <li><a href="math.html">Non Grid</a></li>
+          </ul>
+        </li>
+
+        <li><a href="multiplication1.html">Multiplication</a></li>
+        <li><a href="division1.html">Division</a></li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Currency & Coins
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="identifyTheCoin.html">Identify The Coin</a></li>
+            <li><a href="countTheCoins.html">Count the Coins</a></li>
+          </ul>
+        </li>
+        <li><a href="clock.html">Clock</a></li>
+      </ul>
+      
+    </div>
+  </nav>  
+  <div id="container" style="margin-left:25px;">
+    <form id="form1"></form>
+  </div>
+<script>
+generateGrid();
+document.getElementsByName('quest').
+    forEach(function(me){ me.addEventListener('change', checkAnswer)});
+
+function checkAnswer(event){  
+  let element = event.target;
+  let qno = element.id.split("_")[1];
+  let ans = document.getElementById("ans_" + qno)
+  let elementValue = Math.round(element.value.split(":")[0]) +":" +Math.round(element.value.split(":")[1])
+  console.log("check answer compare " +elementValue + " to " + ans.value)
+  let valid = elementValue==ans.value 
+  element.style.borderColor = valid ? "green" : "red";
+  element.style.color = valid ? "green" : "red";    
+  
+}
+function generateGrid(){
+   let container = document.getElementById("container")
+   ldivQuestion = document.createElement("div");
+   ldivQuestion.className="row";
+   container.append(ldivQuestion);   
+   for(ctr =1;ctr<10;ctr++){
+    lClockDiv = document.createElement("div");
+    lClockDiv.className="col-md-3";
+    ldivQuestion.append(lClockDiv);
+    let hour = faker.random.number({
+          'min': 1,
+          'max': 12
+        }); 
+    let minute = faker.random.number({
+          'min': 0,
+          'max': 59
+        }); ;
+    //round to nearest 5 for better reading
+    minute = Math.round(minute/5) * 5;
+    if(minute==60) minute=0;    
+    createCanvas(lClockDiv, ctr, hour, minute)
+    createInputElements(lClockDiv,ctr, hour, minute)
+   }
+}
+
+function createCanvas(container, qno, hour, minute){
+  let canvas = document.createElement("CANVAS");
+  canvas.id="canvas_" + ctr;
+  container.appendChild(canvas);
+  let ctx = canvas.getContext("2d");
+  let radius = canvas.height / 2;
+  ctx.translate(radius, radius);
+  radius = radius * 0.90
+  drawClock(ctx, radius, ctr, hour, minute);
+}
+
+function createInputElements(parent, qno, hour, minute){
+  let text1 = document.createElement("INPUT")
+  text1.name="quest"
+  text1.id="quest_" + qno
+  text1.size=5;
+  text1.placeholder="00:00"
+  //parent.appendChild(text1)
+  let ans = document.createElement("HIDDEN");
+    ans.id = 'ans_' + qno;
+    ans.value= hour + ":" + minute;
+
+  let str=
+        '<div class="row">'+
+        '<div class="col-md-6">'+
+        '<input type=text name="quest" size=5 placeholder="00:00" id="quest_'+ qno + '">'+
+        '<input type=hidden name="answer" size=5 value="' +  hour +':' + minute+ '" id="ans_'+ qno + '">'+
+        '&nbsp;<a data-toggle="collapse" href="#collapse' + qno +'">Help</a>'+
+        '</div>'+
+      '<div id="collapse' + qno+ '" class="col-md-6 collapse">'+
+      'The time is ' + hour + ":"  + ((minute<10)? "0" + minute : minute)+
+  '</div></div>' ;
+  let elem = document.createElement("template");
+  elem.innerHTML = str.trim();
+  console.log(elem.content)
+  parent.appendChild(elem.content.firstChild)
+
+}
+function drawClock(ctx, radius,qno, hour,minute) {
+  drawFace(ctx, radius);
+  drawNumbers(ctx, radius);
+  drawTime(ctx, radius, qno, hour, minute);
+}
+
+function drawFace(ctx, radius) {
+  var grad;
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, 2*Math.PI);
+  ctx.fillStyle = 'white';
+  ctx.fill();
+  grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+  grad.addColorStop(0, '#333');
+  grad.addColorStop(0.5, 'white');
+  grad.addColorStop(1, '#333');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = radius*0.1;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+  ctx.fillStyle = '#333';
+  ctx.fill();
+}
+
+function drawNumbers(ctx, radius) {
+  var ang;
+  var num;
+  ctx.font = radius*0.15 + "px arial";
+  ctx.textBaseline="middle";
+  ctx.textAlign="center";
+  for(num = 1; num < 13; num++){
+    ang = num * Math.PI / 6;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius*0.85);
+    ctx.rotate(-ang);
+    ctx.fillText(num.toString(), 0, 0);
+    ctx.rotate(ang);
+    ctx.translate(0, radius*0.85);
+    ctx.rotate(-ang);
+  }
+}
+
+function drawTime(ctx, radius, qno, hour, minute){
+    let now = new Date();
+    /*let ans = document.createElement("HIDDEN");
+    ans.id = 'ans_' + qno;
+    ans.value= hour + ":" + minute;
+    document.forms[0].appendChild(ans)*/
+    var second = now.getSeconds();
+    //hour
+    hour=hour%12;
+    hour=(hour*Math.PI/6)+
+    (minute*Math.PI/(6*60))+
+    (second*Math.PI/(360*60));
+    drawHand(ctx, hour, radius*0.5, radius*0.07);
+    //minute
+    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+    drawHand(ctx, minute, radius*0.8, radius*0.07);
+    // second
+    //second=(second*Math.PI/30);
+    //drawHand(ctx, second, radius*0.9, radius*0.02);
+}
+
+function drawHand(ctx, pos, length, width) {
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.moveTo(0,0);
+    ctx.rotate(pos);
+    ctx.lineTo(0, -length);
+    ctx.stroke();
+    ctx.rotate(-pos);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<html>
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177918754-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-177918754-1');
+  </script>
+
+</head>
+
+<style>
+  .div {
+    border: 3px;
+    border-color: black;
+  }
+
+  .coinOptions {
+    font-size: 24px;
+    text-align: right;
+  }
+
+  .ansDiv {
+    font-size: 24px;
+    text-align: left;
+  }
+
+  .coinImg {
+    max-width: 200px;
+    max-height: 200px;
+    width: 200px;
+    height: auto;
+  }
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="./scripts/faker.min.js"></script>
+
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Elementarty</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Addition/Substraction
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="GridMath.html">Grid</a></li>
+            <li><a href="math.html">Non Grid</a></li>
+          </ul>
+        </li>
+
+        <li><a href="multiplication1.html">Multiplication</a></li>
+        <li><a href="division1.html">Division</a></li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Currency & Coins
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="identifyTheCoin.html">Identify The Coin</a></li>
+            <li><a href="countTheCoins.html">Count the Coins</a></li>
+          </ul>
+        </li>
+        <li><a href="clock.html">Clock</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div id="container">
+    <h1>Which coin is this?</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <img id="coinId_1" src="" class="img-fluid coinImg">
+
+        <img id="coinId_2" src="" class="img-fluid coinImg">
+
+      </div>
+      <div class="col-md-6">
+        <div class="cold-md-12" id="optionsDiv">
+
+        </div>
+        <div id="prompt" class=" col-md-6 ansDiv"></div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  let coinIndex = 0;
+  var coins = [
+    { "img": "cent", value: 1, text: "1c Cent" },
+    { "img": "nickel", value: 5, text: "5c Nickel" },
+    { "img": "dime", value: 10, text: "10c Dime" },
+    { "img": "quarter", value: 25, text: "25c Quarter" },
+    { "img": "half_dollar", value: 50, text: "50c Half Dollar" },
+    { "img": "dollar", value: 100, text: "$1 Dollar" }
+  ]
+  function generateQuestion() {
+    document.getElementById("prompt").innerHTML = "";
+    coinIndex = faker.random.number(5);
+    console.log("coin index :" + coinIndex)
+    document.getElementById("coinId_1").src = "images/" + coins[coinIndex].img + "_1.jpg";
+    document.getElementById("coinId_2").src = "images/" + coins[coinIndex].img + "_2.jpg";
+  }
+  function generateOptions(){
+    let optionsDiv = document.getElementById("optionsDiv")
+    let str= "";
+    for(let ctr=0;ctr<coins.length;ctr++){
+      str += '<div class="radio">' + 
+              '<label class="coinOptions">'+
+              '<input type="radio" id="optradio" name="optradio" onChange="checkAnswer('+ ctr+')">'+ coins[ctr].text + '</label>'+
+              '</div>'
+    }
+    optionsDiv.innerHTML=str;
+
+  }
+  generateQuestion();
+  generateOptions();
+
+  function checkAnswer(index) {
+    let prompt = document.getElementById("prompt");
+    console.log(index + ":" +coinIndex)
+    if (index == coinIndex) {
+      prompt.innerHTML = "Correct <span style='font-size:100px;'>&#9995;</span>";
+    } else {
+      document.getElementById("optradio").selectedIndex = coinIndex
+      prompt.innerHTML = "Oops!! This coin is " + coins[coinIndex].text;
+    }
+    prompt.innerHTML += "<br><a href='javascript:generateQuestion();generateOptions()'>Try More</a>"
+  }
+</script>
+
+</html>
