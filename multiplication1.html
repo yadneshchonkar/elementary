@@ -1,115 +1,178 @@
 <html>
-<head>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177918754-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'UA-177918754-1');
-</script>
-	
-</head>	
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177918754-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-177918754-1');
+  </script>
+
+</head>
 <style>
-.cell{
-  border: 4px solid blue;
-}
-.cellBG{
-  background-color: blueviolet;
-}
-.cellHeader{
-	font-size:44px;
-	text-align:center;
-  vertical-align: text-bottom;
-}
-.tableCell{
-	font-size:40px;
-	text-align:left;  
-}
-.classImage{
-  max-width: 200px;
-  max-height: 200px;
-  width: 100px; 
-  height: auto;
-  visibility: hidden;
-}
+  .cell {
+    border: 4px solid lightsalmon;
+  }
+
+  .cellBG {
+    background-color: blueviolet;
+  }
+
+  .cellHeader {
+    font-size: 44px;
+    text-align: center;
+    vertical-align: text-bottom;
+  }
+
+  .tableCell {
+    font-size: 30px;
+    text-align: left;
+  }
+
+  .classImage {
+    max-width: 50px;
+    max-height: 50px;
+    width: 100px;
+    height: auto;
+    visibility: hidden;
+  }
+
+  .correct {
+    border: 4px solid green;
+  }
+
+  .wrong {
+    border: 4px solid red;
+  }
 </style>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="./scripts/faker.min.js"></script>
+
 <body>
-<div id="container">
-  <h1> How Many <img src="./images/strawberry.jpg" class="classImage" style="visibility: visible;">
-       would you need to fill in each box? <input size="2" type="text" id="answer" onchange="checkAnswer(this.value)">
-  </h1>
-  <h1 id="ans"></h1>
-  <div id="gridSection" class="col-md-9"></div>
-  <div id="tablSection" class="col-md-3"></div>
-</div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Elementarty</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Addition/Substraction
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="GridMath.html">Grid</a></li>
+            <li><a href="math.html">Non Grid</a></li>
+          </ul>
+        </li>
+
+        <li><a href="multiplication1.html">Multiplication</a></li>
+        <li><a href="division1.html">Division</a></li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Currency & Coins
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="identifyTheCoin.html">Identify The Coin</a></li>
+            <li><a href="countTheCoins.html">Count the Coins</a></li>
+          </ul>
+        </li>
+        <li><a href="clock.html">Clock</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="container">
+    <p class="h2"> How Many <img src="./images/strawberry.jpg" class="classImage" style="visibility: visible;">
+      would you need to fill in each box? <input size="2" type="text" id="answer" onchange="checkAnswer()">
+      <button id="check" onclick="checkAnswer()">Check Answer</button>
+      <button id="tryMore" onclick="generateGrid()">Try More</button>
+    </p>
+    <div class="col-md-8">
+      <h2 id="ans"></h2>
+    </div>
+    <div id="gridSection" class="col-md-9"></div>
+    <div id="tablSection" class="col-md-3"></div>
+  </div>
 </body>
 <script>
-  function checkAnswer(ans){
+  function checkAnswer() {
+    let ans = document.getElementById("answer").value
     console.log("answer:" + ans)
-    for(i=1;; i++){
-      let img = document.getElementById("img_"+i);
-      if(img==null) break;
-      if(i<=ans)
-        img.style.visibility ='visible';
-      else 
-        img.style.visibility ='hidden';
+    for (i = 1; ; i++) {
+      let img = document.getElementById("img_" + i);
+      if (img == null) break;
+      if (i <= ans)
+        img.style.visibility = 'visible';
+      else
+        img.style.visibility = 'hidden';
     }
     fillTableSection()
     let ansH1 = document.getElementById("ans")
-    if(ans==(rows*cols)){
-      ansH1.innerHTML ="Correct <span style='font-size:100px;'>&#9995;</span>";
-    }else if(ans>(rows*cols)){
-      ansH1.innerHTML ="You have " + (ans - (rows*cols)) + " more than the boxes";
-    }else{
-      ansH1.innerHTML ="You still have " + ((rows*cols) -ans) + " boxes empty";
+    if (ans == (rows * cols)) {
+      ansH1.innerHTML = "Correct <span style='font-size:100px;'>&#9995;</span>";
+      ansH1.className = "correct";
+    } else if (ans > (rows * cols)) {
+      ansH1.innerHTML = "You have filled all the boxes and have " + (ans - (rows * cols)) + " more strawberries";
+      ansH1.className = "wrong";
+    } else {
+      ansH1.innerHTML = "You need " + ((rows * cols) - ans) + " more strawberries to fill all the boxes";
+      ansH1.className = "wrong";
+
     }
   }
   let limit = 10;
   let rows = 0;
-  let cols =0;
-  function fillTableSection(){
-    let str = "<h1>Table Section</h1>";    
-    for(i=1;i<=10;i++){
-      let highlight1 = i== cols  ? 'cellBG':'';
-      let highlight2 = i==rows ? 'cellBG':'';
-      str +="<div class='row'>";
-      str += "<div class='col-md-6 tableCell cell " + highlight1 + "'>" +  rows + "X" + i + "=" + (rows*i) + "</div>";
-      str += "<div class='col-md-6 tableCell cell " + highlight2 + "'>" +  cols + "X" + i + "=" + (cols*i) + "</div>";
-      str+="</div>"
+  let cols = 0;
+  function fillTableSection() {
+    document.getElementById("ans").innerHTML = "";
+    document.getElementById("ans").className = "";
+    let str = '<h1><a data-toggle="collapse" href="#collapse1">Table Section</a></h1>';
+    str+='<div id="collapse1" class="collapse">'
+    for (i = 1; i <= 10; i++) {
+      let highlight1 = i == cols ? 'cellBG' : '';
+      let highlight2 = i == rows ? 'cellBG' : '';
+      str += "<div class='row'>";
+      str += "<div class='col-md-6 tableCell cell " + highlight1 + "'>" + rows + "X" + i + "=" + (rows * i) + "</div>";
+      str += "<div class='col-md-6 tableCell cell " + highlight2 + "'>" + cols + "X" + i + "=" + (cols * i) + "</div>";
+      str += "</div>"
     }
-    
-    document.getElementById("tablSection").innerHTML=str;
+    //str += "</div>"
+    document.getElementById("tablSection").innerHTML = str;
   }
-  function generateGrid(){
-    let grid ="";
-    rows =0; cols = 0;
-    while(rows<2) rows = faker.random.number(limit);
-    while(cols<2)  cols = faker.random.number(limit);
-    let colSize = Math.floor(10/(cols+1));
-    if(colSize==0) colSize=1;
+
+
+
+  function generateGrid() {
+    document.getElementById("answer").value = "";
+    let grid = "";
+    rows = 0; cols = 0;
+    rows = faker.random.arrayElement([3,4,6,7,8,9,11,12,13,14]);
+    cols = faker.random.arrayElement([3,4,6,7,8,9,11]);
+    let colSize = Math.floor(10 / (cols + 1));
+    if (colSize == 0) colSize = 1;
     console.log(rows + ":" + cols + ":" + colSize)
-    for(r=0, ctr=1;r<=rows;r++){
-      grid +='<div class="row">';
-      for(c=0;c<=cols;c++){	
-        if(r==0 && c>0) grid +='<div class="col-md-' + colSize +' cellHeader ">' + c + '</div>';
-        else if(r>0 && c==0) grid +='<div class="col-md-' + colSize +' cellHeader ">' + r + '</div>';
-        else if(r!=0 && c!=0)
-				  grid +='<div  class="col-md-' + colSize +' cell"><img id="img_' + ctr++ +'" src="./images/strawberry.jpg" class="classImage"></div>';
-        else 
-          grid +='<div class="col-md-' + colSize +' "></div>';
+    for (r = 0, ctr = 1; r <= rows; r++) {
+      grid += '<div class="row">';
+      for (c = 0; c <= cols; c++) {
+        if (r == 0 && c > 0) grid += '<div class="col-md-' + colSize + ' cellHeader ">' + c + '</div>';
+        else if (r > 0 && c == 0) grid += '<div class="col-md-' + colSize + ' cellHeader ">' + r + '</div>';
+        else if (r != 0 && c != 0)
+          grid += '<div  class="col-md-' + colSize + ' cell"><img id="img_' + ctr++ + '" src="./images/strawberry.jpg" class="classImage"></div>';
+        else
+          grid += '<div class="col-md-' + colSize + ' "></div>';
       }
-      grid +='</div>';
+      grid += '</div>';
     }
-    document.getElementById("gridSection").innerHTML=grid;
+    document.getElementById("gridSection").innerHTML = grid;
+    document.getElementById("ans").value = ""
     fillTableSection();
   }
   generateGrid();
 </script>
+
 </html>
