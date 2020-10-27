@@ -2,3 +2,4 @@ feature2.
 added new comment	
 additional line added
 feature2_missing_line
+line 1
