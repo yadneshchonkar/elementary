@@ -57,7 +57,15 @@
           </ul>
         </li>
 
-        <li><a href="multiplication1.html">Multiplication</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Multiplication
+              <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="multiplication2.html">Grid</a></li>
+              <li><a href="multiplication1.html">Table</a></li>
+            </ul>
+          </li>
+
         <li><a href="division1.html">Division</a></li>
 
         <li class="dropdown">
@@ -105,7 +113,7 @@
       'max': 10
     });
     console.log(coinsShown +" coins of :" + JSON.stringify(coins[coinIndex]))
-    
+
     let answer = (coins[coinIndex].value * coinsShown).toFixed(2);
     let str = "";
     str += '<div class="row questionRow"><div class="col-md-6" id="coinsDiv">'
@@ -119,9 +127,9 @@
 
       '<a data-toggle="collapse" href="#collapse' + qno +'">Help</a>'+
       '<div id="collapse' + qno+ '" class="collapse">'+
-        coinsShown+ ' coins of ' + coins[coinIndex].text  + ' is ' + 
+        coinsShown+ ' coins of ' + coins[coinIndex].text  + ' is ' +
         ((answer<1) ? (answer*100)+" cents" : "$" + answer )+
-      '</div>' +      
+      '</div>' +
 
       '</div>'
     document.getElementById("questionsGrid").innerHTML += str;
@@ -138,13 +146,13 @@
     let ans = document.getElementById("ans_" + qno)
     //let elementValue = element.value;
     console.log("check answer compare " + element.value + ":" + ans.value)
-    
+
     let valid = element.value/1 == ans.value/1
     //compare in cents
     if(!valid){
       valid = element.value/100 == ans.value/1
     }
-    
+
     element.style.borderColor = valid ? "green" : "red";
     element.style.color = valid ? "green" : "red";
   }

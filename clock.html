@@ -7,10 +7,10 @@
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
-  
+
       gtag('config', 'UA-177918754-1');
     </script>
-  
+
   </head>
   <style>
   .timeLabel {
@@ -18,7 +18,7 @@
     text-align: left;
   }
 .col-md-3{
-  
+
   border: 2px solid blue;
     margin: 5px- 1px;
 }
@@ -27,7 +27,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="./scripts/faker.min.js"></script>
-  
+
 <body>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -44,7 +44,15 @@
           </ul>
         </li>
 
-        <li><a href="multiplication1.html">Multiplication</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Multiplication
+              <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="multiplication2.html">Grid</a></li>
+              <li><a href="multiplication1.html">Table</a></li>
+            </ul>
+          </li>
+
         <li><a href="division1.html">Division</a></li>
 
         <li class="dropdown">
@@ -57,9 +65,9 @@
         </li>
         <li><a href="clock.html">Clock</a></li>
       </ul>
-      
+
     </div>
-  </nav>  
+  </nav>
   <div id="container" style="margin-left:25px;">
     <form id="form1"></form>
   </div>
@@ -68,22 +76,22 @@ generateGrid();
 document.getElementsByName('quest').
     forEach(function(me){ me.addEventListener('change', checkAnswer)});
 
-function checkAnswer(event){  
+function checkAnswer(event){
   let element = event.target;
   let qno = element.id.split("_")[1];
   let ans = document.getElementById("ans_" + qno)
   let elementValue = Math.round(element.value.split(":")[0]) +":" +Math.round(element.value.split(":")[1])
   console.log("check answer compare " +elementValue + " to " + ans.value)
-  let valid = elementValue==ans.value 
+  let valid = elementValue==ans.value
   element.style.borderColor = valid ? "green" : "red";
-  element.style.color = valid ? "green" : "red";    
-  
+  element.style.color = valid ? "green" : "red";
+
 }
 function generateGrid(){
    let container = document.getElementById("container")
    ldivQuestion = document.createElement("div");
    ldivQuestion.className="row";
-   container.append(ldivQuestion);   
+   container.append(ldivQuestion);
    for(ctr =1;ctr<10;ctr++){
     lClockDiv = document.createElement("div");
     lClockDiv.className="col-md-3";
@@ -91,14 +99,14 @@ function generateGrid(){
     let hour = faker.random.number({
           'min': 1,
           'max': 12
-        }); 
+        });
     let minute = faker.random.number({
           'min': 0,
           'max': 59
         }); ;
     //round to nearest 5 for better reading
     minute = Math.round(minute/5) * 5;
-    if(minute==60) minute=0;    
+    if(minute==60) minute=0;
     createCanvas(lClockDiv, ctr, hour, minute)
     createInputElements(lClockDiv,ctr, hour, minute)
    }

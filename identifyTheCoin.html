@@ -57,7 +57,15 @@
           </ul>
         </li>
 
-        <li><a href="multiplication1.html">Multiplication</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Multiplication
+              <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="multiplication2.html">Grid</a></li>
+              <li><a href="multiplication1.html">Table</a></li>
+            </ul>
+          </li>
+
         <li><a href="division1.html">Division</a></li>
 
         <li class="dropdown">
@@ -113,7 +121,7 @@
     let optionsDiv = document.getElementById("optionsDiv")
     let str= "";
     for(let ctr=0;ctr<coins.length;ctr++){
-      str += '<div class="radio">' + 
+      str += '<div class="radio">' +
               '<label class="coinOptions">'+
               '<input type="radio" id="optradio" name="optradio" onChange="checkAnswer('+ ctr+')">'+ coins[ctr].text + '</label>'+
               '</div>'
