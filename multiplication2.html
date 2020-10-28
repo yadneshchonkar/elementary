@@ -1,0 +1,202 @@
+<html>
+
+<head>
+<script>
+  dataLayer = [];
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TJQGSPJ');</script>
+    
+<!-- End Google Tag Manager -->
+</head>
+<style>
+  .number-content {
+    font-size: 44px;
+    text-align: right;
+  }
+
+  .question {
+
+    border: 2px solid blue;
+    margin: 5px- 1px;
+  }
+
+  .answer {
+    border-top: 2px solid gray;
+  }
+
+  .ansText {
+    text-align: right;
+    float: right;
+    direction: rtl;
+
+  }
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="./scripts/faker.min.js"></script>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TJQGSPJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->  
+  <div id="maincontainer">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Elementarty</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Addition/Substraction
+              <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="GridMath.html">Grid</a></li>
+              <li><a href="math.html">Non Grid</a></li>
+            </ul>
+          </li>
+
+          <li><a href="multiplication1.html">Multiplication</a></li>
+          <li><a href="division1.html">Division</a></li>
+
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Currency & Coins
+              <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="identifyTheCoin.html">Identify The Coin</a></li>
+              <li><a href="countTheCoins.html">Count the Coins</a></li>
+            </ul>
+          </li>
+          <li><a href="clock.html">Clock</a></li>
+        </ul>
+      </div>
+    </nav>
+
+
+
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary active">
+        <input type="radio" name="options" id="option1" autocomplete="off" onChange=changeLevel(1)>Level 1
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" id="option2" autocomplete="off" onChange=changeLevel(2)>Level 2
+      </label>
+    </div>
+    <div id="container"></div>
+  </div>
+</body>
+<script>
+  var data = [];
+  const cols = 4;
+  let cnt = 30;
+  let limit = 100;
+  function changeLevel(levelNo) {
+    dataLayer.push(
+      {
+        'eventValue': levelNo,
+        'eventAction': 'levelChange',
+        'eventCategory': 'Multiplication'
+      }
+   );   
+    switch (levelNo) {
+      case 1:
+        limit = 10; break;
+      case 2:
+        limit = 50; break;
+      case 3:
+        limit = 100; break;
+      case 4:
+        limit = 500; break;
+    }
+    fillContainer();
+  }
+  function fillContainer() {
+    data = [];
+    createLargeGrid(cnt);
+    generateData(cnt);
+    fillGrid(cnt);
+  }
+
+  function fillGrid(cnt) {
+    for (i = 0; i < cnt; i++) {
+      document.getElementById("l" + i).innerHTML = data[i].l
+      document.getElementById("o" + i).innerHTML = data[i].opr
+      document.getElementById("r" + i).innerHTML = data[i].r
+    }
+  }
+  function generateData(cnt) {
+    for (i = 0; i < cnt; i++) {
+      let eqn = {
+        "l": faker.random.number(limit), "r": faker.random.number(limit),
+        "opr": "*",
+        "r": faker.random.number(10),
+      }
+      eqn["ans"] = eval(eqn.l + eqn.opr + eqn.r);
+      data.push(eqn);
+    }
+  }
+  function createLargeGrid(dataCount) {
+    const container = document.getElementById("container");
+    container.innerHTML = "";
+    let rows = dataCount / 2;
+
+    let content = '';
+    for (i = 0; i < dataCount; i++) {
+      if (i % cols == 0) {
+        if (i > 0) {
+          content += '</div>'
+        }
+        content += '<div class="row">';
+      }
+      content +=
+        '<div class="col-md-3 question">' +
+        '<div class="row question-section">' +
+        '<div class="col-md-12 number-content" id="l' + i + '" >2</div>' +
+        '<div class="col-md-8 number-content opr" id="o' + i + '" >+</div>' +
+        '<div class="col-md-4 number-content" id="r' + i + '" >2</div>' +
+        '<div class="col-md-12 number-content answer"><input size=2 type="text" id="a' + i + '" class="answerText" onFocus="focusOn(this)" onChange="checkAnswer(this)" value=""></div>' +
+        '</div>' +
+        '</div><!--end of the question-->';
+    }
+    content += "</div><!--end of the row-->";
+    container.innerHTML = content;
+  }
+
+  fillContainer();
+  let srtTime="";
+  function focusOn(elem){
+     srtTime = new Date().getTime();  
+  }
+  function checkAnswer(ans) {
+    if (ans.value == "") return;
+    let timeTaken =  new Date().getTime()-srtTime;
+    let qNo = ans.id.substring(1);
+    let valid = (
+      eval(
+        document.getElementById("l" + qNo).innerText +
+        document.getElementById("o" + qNo).innerText +
+        document.getElementById("r" + qNo).innerText
+      ) == document.getElementById("a" + qNo).value
+    );
+      dataLayer.push({
+        'event' : 'fieldTiming',
+        'timingCategory' : 'MultiplicationTiming',
+        'timingVariable' : qNo,
+        'timingLabel' : valid,
+        'timingValue' : timeTaken
+      });    
+    console.log(qNo + ":" + valid);
+    ans.style.borderColor = valid ? "green" : "red";
+    ans.style.color = valid ? "green" : "red";
+    //document.getElementById("l" + qNo)
+  }
+
+</script>
+
+</html>
