@@ -4,3 +4,6 @@ additional line added
 feature2_missing_line
 line 1 line1_1
 line 2
+
+merge1
+merge2
