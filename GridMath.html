@@ -11,7 +11,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-TJQGSPJ');</script>
-    
+
 <!-- End Google Tag Manager -->
 </head>
 <style>
@@ -46,7 +46,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TJQGSPJ"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->  
+<!-- End Google Tag Manager (noscript) -->
   <div id="maincontainer">
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -62,8 +62,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <li><a href="math.html">Non Grid</a></li>
             </ul>
           </li>
-
-          <li><a href="multiplication1.html">Multiplication</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Multiplication
+              <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="multiplication2.html">Grid</a></li>
+              <li><a href="multiplication1.html">Table</a></li>
+            </ul>
+          </li>
           <li><a href="division1.html">Division</a></li>
 
           <li class="dropdown">
@@ -115,7 +121,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         'eventAction': 'levelChange',
         'eventCategory': 'Multiplication'
       }
-   );   
+   );
     switch (levelNo) {
       case 1:
         limit = 10; break;
@@ -192,7 +198,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   fillContainer();
   let srtTime="";
   function focusOn(elem){
-     srtTime = new Date().getTime();  
+     srtTime = new Date().getTime();
   }
   function checkAnswer(ans) {
     if (ans.value == "") return;
@@ -211,7 +217,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         'timingVariable' : qNo,
         'timingLabel' : valid,
         'timingValue' : timeTaken
-      });    
+      });
     console.log(qNo + ":" + valid);
     ans.style.borderColor = valid ? "green" : "red";
     ans.style.color = valid ? "green" : "red";
